@@ -1,0 +1,315 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #0a0c10 0%, #0d1117 50%, #0e121a 100%);
+  --card-bg: #161b22;
+  --card-border: #21262d;
+  --primary-accent: #10b981;
+  --secondary-accent: #34d399;
+  --text-dark: #f0f6fc;
+  --text-main: #c9d1d9;
+  --text-sub: #8b949e;
+  --text-muted: #6e7681;
+  --glass-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-dark) !important;
+}
+
+.text-slate-300 {
+  color: #8b949e !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Crisp Clean Dark Card Utilities */
+.glass-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.15), 0 8px 16px -4px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-interactive:hover {
+  transform: translateY(-4px);
+}
+
+/* Header & Brand Styling */
+.navbar-custom {
+  background: rgba(22, 26, 34, 0.95) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-custom .dropdown-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  color: var(--text-dark) !important;
+}
+
+.no-arrow .dropdown-toggle::after {
+  display: none !important;
+}
+
+.navbar-brand-gradient {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+/* High Contrast Buttons */
+.btn-indigo {
+  background: #10b981 !important;
+  color: #0d1117 !important;
+  border: none;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 0.65rem 1.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+}
+
+.btn-indigo:hover {
+  background: #0d9668 !important;
+  color: #0d1117 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+}
+
+.btn-outline-indigo {
+  color: #10b981 !important;
+  border: 1.5px solid #10b981 !important;
+  background: transparent !important;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-indigo:hover {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #34d399 !important;
+  border-color: #34d399 !important;
+}
+
+/* Form Controls - High Contrast & Dark Visibility */
+.form-label {
+  color: var(--text-dark) !important;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.form-control-dark, .form-select-dark {
+  background-color: #1f242d !important;
+  border: 1.5px solid #30363d !important;
+  color: #f0f6fc !important;
+  border-radius: 10px !important;
+  padding: 0.7rem 1rem !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.form-control-dark::placeholder {
+  color: #6e7681 !important;
+}
+
+.form-control-dark:focus, .form-select-dark:focus {
+  background-color: #1f242d !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.2) !important;
+  color: #f0f6fc !important;
+}
+
+/* Dropdown Menu styling for dark mode */
+.dropdown-menu {
+  background-color: #161b22 !important;
+  border: 1px solid #30363d !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dropdown-item {
+  color: #c9d1d9 !important;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  color: #10b981 !important;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #30363d !important;
+}
+
+/* Status Badges */
+.badge-status-open {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  padding: 0.4em 0.85em;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.badge-status-in_progress {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  padding: 0.4em 0.85em;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.badge-status-resolved {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  padding: 0.4em 0.85em;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.badge-status-closed {
+  background-color: rgba(110, 118, 129, 0.15) !important;
+  color: #8b949e !important;
+  border: 1px solid rgba(110, 118, 129, 0.3) !important;
+  padding: 0.4em 0.85em;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.badge-status-reopened {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  padding: 0.4em 0.85em;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+/* Priority Badges - High Contrast & Crisp Visibility */
+.badge-prio-low {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  font-weight: 700 !important;
+  border-radius: 6px;
+  padding: 0.35em 0.75em;
+  font-size: 0.75rem;
+}
+
+.badge-prio-medium {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  color: #3b82f6 !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  font-weight: 700 !important;
+  border-radius: 6px;
+  padding: 0.35em 0.75em;
+  font-size: 0.75rem;
+}
+
+.badge-prio-high {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  font-weight: 700 !important;
+  border-radius: 6px;
+  padding: 0.35em 0.75em;
+  font-size: 0.75rem;
+}
+
+.badge-prio-urgent {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  font-weight: 700 !important;
+  border-radius: 6px;
+  padding: 0.35em 0.75em;
+  font-size: 0.75rem;
+}
+
+/* Sidebar Navigation */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  color: #8b949e;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #10b981 !important;
+}
+
+/* Table Dark Customization */
+.table-custom {
+  color: var(--text-main) !important;
+}
+
+.table-custom th {
+  background: #161a22 !important;
+  color: #8b949e !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5px solid #30363d !important;
+}
+
+.table-custom td {
+  border-bottom: 1px solid #21262d !important;
+  vertical-align: middle;
+  color: var(--text-main) !important;
+  background: transparent !important;
+}
+
+/* Modal Dark Customization */
+.modal-dark .modal-content {
+  background-color: #161b22 !important;
+  color: var(--text-main) !important;
+  border-radius: 16px !important;
+  border: 1px solid #30363d !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal-dark .modal-header, .modal-dark .modal-body, .modal-dark .modal-footer {
+  background-color: #161b22 !important;
+  color: var(--text-main) !important;
+  border: none !important;
+}
+
+.modal-dark .modal-header {
+  border-bottom: 1px solid #21262d !important;
+}
+
+.modal-dark .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
