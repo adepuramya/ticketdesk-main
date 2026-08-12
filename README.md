@@ -3,7 +3,7 @@
 ![Build & Deploy Status](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue)
 ![Java](https://img.shields.io/badge/Backend-Java%2021%20%7C%20Spring%20Boot%203.2-green)
 ![React](https://img.shields.io/badge/Frontend-React%2019%20%7C%20Vite-indigo)
-![AWS](https://img.shields.io/badge/Cloud-AWS%20ECS%20Fargate%20%7C%20RDS%20PostgreSQL-orange)
+![AWS](https://img.shields.io/badge/Cloud-AWS%20ECS%20Fargate%20%7C%20RDS%20MySQL-orange)
 ![Terraform](https://img.shields.io/badge/IaC-Terraform-purple)
 
 **TicketDesk** is a complete, production-ready IT Support Ticket Management System built from scratch and fully deployable to AWS using Terraform Infrastructure as Code, Docker containerization, and GitHub Actions CI/CD.
@@ -14,13 +14,12 @@
 
 ```mermaid
 graph TD
-    User[Browser / React 19 Frontend] -->|HTTPS| CF[Amazon CloudFront CDN]
-    CF -->|Static Web Assets| S3Web[Frontend S3 Bucket]
+    User[Browser / React 19 Frontend] -->|Static Web Assets| S3Web[Frontend S3 Bucket]
     User -->|API Requests| ALB[Application Load Balancer]
     
     subgraph VPC [Amazon VPC - 2 Public & 2 Private Subnets]
         ALB -->|Port 8080| ECS[ECS Fargate - Java 21 Spring Boot Backend]
-        ECS -->|Private Subnet| RDS[(RDS PostgreSQL 16 DB)]
+        ECS -->|Private Subnet| RDS[(RDS MySQL DB)]
         ECS -->|Pre-signed URLs| S3Store[S3 Bucket - Attachments]
         ECS -->|Secrets & Parameters| SecMgr[AWS Secrets Manager & Parameter Store]
         ECS -->|Logs & Metrics| CW[CloudWatch Logs & Dashboard]
