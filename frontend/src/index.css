@@ -127,7 +127,7 @@ body {
   border: 1.5px solid #30363d !important;
   color: #f0f6fc !important;
   border-radius: 10px !important;
-  padding: 0.7rem 1rem !important;
+  padding: 0.7rem 1rem;
   font-size: 0.95rem;
   font-weight: 500;
   transition: all 0.2s ease;
