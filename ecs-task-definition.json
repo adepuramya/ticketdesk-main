@@ -1,0 +1,31 @@
+{
+  "family": "ticketdesk-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::051084216938:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "ticketdesk-backend",
+      "image": "051084216938.dkr.ecr.eu-north-1.amazonaws.com/ticketdesk-main-backend:807ccd4",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ticketdesk-backend",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

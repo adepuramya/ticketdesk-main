@@ -23,6 +23,32 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_standard" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+# Policy for Secrets Manager access from Task Execution Role (Least Privilege)
+resource "aws_iam_policy" "ecs_execution_secrets" {
+  name        = "${var.project_name}-${var.environment}-ecs-secrets-policy"
+  description = "Allows ECS Execution Role to pull secrets from Secrets Manager"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = [
+          "arn:aws:secretsmanager:*:*:secret:${var.project_name}/*"
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_execution_secrets" {
+  role       = aws_iam_role.ecs_execution_role.name
+  policy_arn = aws_iam_policy.ecs_execution_secrets.arn
+}
+
 # ECS Task Role
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.project_name}-${var.environment}-ecs-task-role"

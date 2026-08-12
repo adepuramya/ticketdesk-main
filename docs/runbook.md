@@ -13,7 +13,7 @@ Operational procedures, monitoring guidelines, maintenance tasks, and emergency 
 ### CloudWatch Log Inspection
 To view real-time logs from ECS Fargate containers:
 ```bash
-aws logs tail /ecs/ticketdesk-prod --follow --region us-east-1
+aws logs tail /ecs/ticketdesk-prod --follow --region eu-north-1
 ```
 
 ---
@@ -27,7 +27,7 @@ aws ecs update-service \
   --cluster ticketdesk-prod-cluster \
   --service ticketdesk-prod-backend-service \
   --desired-count 4 \
-  --region us-east-1
+  --region eu-north-1
 ```
 
 ### Auto-Scaling Rules
@@ -40,16 +40,16 @@ Auto-scaling is configured via Terraform (`aws_appautoscaling_policy`) to scale 
 ### On-Demand Snapshot
 ```bash
 aws rds create-db-snapshot \
-  --db-instance-identifier ticketdesk-prod-postgres \
+  --db-instance-identifier ticketdesk-prod-mysql \
   --db-snapshot-identifier ticketdesk-backup-$(date +%Y%m%d%H%M) \
-  --region us-east-1
+  --region eu-north-1
 ```
 
 ### Database Restore
 To restore database state from a snapshot:
 ```bash
 aws rds restore-db-instance-from-db-snapshot \
-  --target-db-instance-identifier ticketdesk-prod-postgres-restored \
+  --target-db-instance-identifier ticketdesk-prod-mysql-restored \
   --db-snapshot-identifier <SNAPSHOT_ID> \
   --db-instance-class db.t4g.micro \
   --no-publicly-accessible

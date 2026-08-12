@@ -14,9 +14,9 @@ Comprehensive guide for diagnosing and resolving infrastructure, application, an
   - Java Heap OutOfMemory (`java.lang.OutOfMemoryError`).
 - **Diagnosis**:
   ```bash
-  aws ecs list-tasks --cluster ticketdesk-prod-cluster --region us-east-1
-  aws ecs describe-tasks --cluster ticketdesk-prod-cluster --tasks <TASK_ARN> --region us-east-1
-  aws logs tail /ecs/ticketdesk-prod --since 1h --region us-east-1
+  aws ecs list-tasks --cluster ticketdesk-prod-cluster --region eu-north-1
+  aws ecs describe-tasks --cluster ticketdesk-prod-cluster --tasks <TASK_ARN> --region eu-north-1
+  aws logs tail /ecs/ticketdesk-prod --since 1h --region eu-north-1
   ```
 - **Resolution**:
   - Verify DB password secret in AWS Secrets Manager: `ticketdesk/prod/db_password`.

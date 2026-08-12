@@ -1,6 +1,6 @@
 # TicketDesk AWS Monthly Cost Estimation
 
-Estimated monthly AWS infrastructure costs for running TicketDesk in `us-east-1` (US East N. Virginia) region.
+Estimated monthly AWS infrastructure costs for running TicketDesk in `eu-north-1` (Europe Stockholm) region.
 
 ---
 
@@ -9,15 +9,15 @@ Estimated monthly AWS infrastructure costs for running TicketDesk in `us-east-1`
 | AWS Service | Configuration Specs | Quantity / Usage | Estimated Monthly Cost (USD) |
 | :--- | :--- | :--- | :--- |
 | **Amazon ECS Fargate** | 0.5 vCPU, 1 GB RAM per task | 2 Tasks running 24/7 | ~$22.00 |
-| **Amazon RDS PostgreSQL** | `db.t4g.micro` (2 vCPU, 1 GB RAM), 20 GB gp3 storage | 1 Single-AZ Instance | ~$15.50 |
+| **Amazon RDS MySQL** | `db.t4g.micro` (2 vCPU, 1 GB RAM), 20 GB gp3 storage | 1 Single-AZ Instance | ~$15.50 |
 | **Application Load Balancer** | 1 ALB, 0.5 LCU average traffic | 730 Hours / month | ~$20.00 |
-| **Amazon CloudFront** | Global CDN for static frontend S3 | 50 GB Data Transfer Out | ~$4.25 |
+| **Amazon CloudFront** | (Bypassed due to account verification restriction) | N/A | $0.00 |
 | **Amazon S3** | Standard Storage for frontend site & ticket attachments | 10 GB Storage + Requests | ~$0.30 |
 | **Amazon ECR** | Container Image Repositories | 5 GB Storage | ~$0.50 |
 | **AWS Secrets Manager** | 2 Secret Keys (`db_password`, `jwt_secret`) | 2 Secrets | ~$0.80 |
 | **Amazon CloudWatch** | Logs, Metrics, 1 Dashboard, 4 Alarms | ~3 GB Ingestion | ~$3.50 |
 | **AWS NAT Gateway** | 1 NAT Gateway in Public Subnet 1 | 730 Hours + Data Processed | ~$32.00 |
-| **Total Estimated Cost** | **Production Grade High-Availability Stack** | **Monthly Total** | **~$98.85 / month** |
+| **Total Estimated Cost** | **Production Grade High-Availability Stack** | **Monthly Total** | **~$94.60 / month** |
 
 ---
 

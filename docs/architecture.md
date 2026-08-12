@@ -8,8 +8,7 @@ TicketDesk is an enterprise-grade IT Support Ticket Management System engineered
 
 ```mermaid
 graph TD
-    User[End User / Browser] -->|HTTPS Requests| CF[Amazon CloudFront CDN]
-    CF -->|Static Assets| S3Web[Frontend S3 Bucket]
+    User[End User / Browser] -->|Static Assets| S3Web[Frontend S3 Bucket]
     User -->|REST API Calls| ALB[Application Load Balancer]
 
     subgraph AWS VPC [Amazon VPC - 10.0.0.0/16]
@@ -20,7 +19,7 @@ graph TD
 
         subgraph Private Subnets [Private Subnets - 2 Availability Zones]
             ECS[Amazon ECS Fargate - Spring Boot Backend]
-            RDS[(Amazon RDS PostgreSQL 16 DB)]
+            RDS[(Amazon RDS MySQL DB)]
         end
     end
 
@@ -39,7 +38,7 @@ graph TD
 - **Framework**: React 19 + JavaScript (Vite)
 - **UI & Styling**: React Bootstrap + Glassmorphism Vanilla CSS + Lucide Icons
 - **State & Form Management**: React Context API (`AuthContext`, `NotificationContext`) + Formik + Yup
-- **Hosting & CDN**: Amazon S3 Static Web Hosting backed by Amazon CloudFront CDN with TLS/SSL encryption and SPA fallback routing.
+- **Hosting & CDN**: Amazon S3 Static Web Hosting (CloudFront bypassed due to AWS account verification restriction).
 
 ### Backend Layer
 - **Framework**: Java 21 + Spring Boot 3.2+
@@ -49,7 +48,7 @@ graph TD
 - **Compute**: Amazon ECS Fargate containerized application running in private subnets across multiple Availability Zones with Auto-Scaling (CPU target 75%).
 
 ### Database & Storage Layer
-- **Database**: Amazon RDS PostgreSQL 16 (Multi-AZ capable, encrypted storage with AWS KMS).
+- **Database**: Amazon RDS MySQL (Single-AZ Instance in private subnet, encrypted storage with AWS KMS).
 - **Object Storage**: Amazon S3 bucket with strict CORS policies, AES256 server-side encryption, and pre-signed URL security for file attachments.
 
 ### Monitoring & Security Layer
