@@ -65,24 +65,24 @@ export const Register = () => {
   };
 
   return (
-    <Container className="d-flex flex-column align-items-center justify-content-center min-vh-100 py-5 position-relative">
+    <Container className="d-flex flex-column align-items-center justify-content-center min-vh-100 py-4 position-relative">
       <div className="position-absolute top-0 start-0 p-4 mt-2">
         <Link to="/" className="text-decoration-none d-inline-flex align-items-center gap-2 small fw-bold" style={{ color: '#8b949e' }}>
           <span>&larr; Back to Landing</span>
         </Link>
       </div>
 
-      <Card className="glass-card p-4 p-md-5" style={{ maxWidth: '520px', width: '100%', background: 'var(--card-bg)' }}>
-        <div className="text-center mb-4">
-          <div className="d-inline-flex p-3 rounded-4 mb-3" style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-            <Headphones size={36} style={{ color: '#10b981' }} />
+      <Card className="glass-card p-3 p-md-4" style={{ maxWidth: '640px', width: '100%', background: 'var(--card-bg)' }}>
+        <div className="text-center mb-3">
+          <div className="d-inline-flex p-2 rounded-4 mb-2" style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+            <Headphones size={28} style={{ color: '#10b981' }} />
           </div>
-          <h2 className="fw-bold mb-1 text-white" style={{ letterSpacing: '-0.5px' }}>Employee Portal</h2>
-          <p className="fs-6 mb-0" style={{ color: '#8b949e' }}>Create your TicketDesk account</p>
+          <h3 className="fw-bold mb-1 text-white" style={{ letterSpacing: '-0.5px' }}>Employee Portal</h3>
+          <p className="small mb-0" style={{ color: '#8b949e' }}>Create your TicketDesk account</p>
         </div>
 
-        {successMessage && <Alert variant="success">{successMessage}</Alert>}
-        {errorMessage && <Alert variant="danger" dismissible onClose={() => setErrorMessage('')}>{errorMessage}</Alert>}
+        {successMessage && <Alert variant="success" className="py-2 mb-3 small">{successMessage}</Alert>}
+        {errorMessage && <Alert variant="danger" className="py-2 mb-3 small" dismissible onClose={() => setErrorMessage('')}>{errorMessage}</Alert>}
 
         <Formik
           initialValues={{ username: '', email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }}
@@ -91,9 +91,9 @@ export const Register = () => {
         >
           {({ handleSubmit, handleChange, handleBlur, values, errors, touched, isSubmitting }) => (
             <Form onSubmit={handleSubmit} noValidate>
-              <div className="row">
-                <Form.Group className="col-md-6 mb-3">
-                  <Form.Label className="form-label">First Name</Form.Label>
+              <div className="row g-3 mb-3">
+                <Form.Group className="col-md-6">
+                  <Form.Label className="form-label mb-1">First Name</Form.Label>
                   <div className="position-relative">
                     <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
                       <User size={18} />
@@ -114,8 +114,8 @@ export const Register = () => {
                   )}
                 </Form.Group>
 
-                <Form.Group className="col-md-6 mb-3">
-                  <Form.Label className="form-label">Last Name</Form.Label>
+                <Form.Group className="col-md-6">
+                  <Form.Label className="form-label mb-1">Last Name</Form.Label>
                   <div className="position-relative">
                     <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
                       <User size={18} />
@@ -137,99 +137,103 @@ export const Register = () => {
                 </Form.Group>
               </div>
 
-              <Form.Group className="mb-3">
-                <Form.Label className="form-label">Username</Form.Label>
-                <div className="position-relative">
-                  <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
-                    <User size={18} />
-                  </span>
-                  <Form.Control
-                    type="text"
-                    name="username"
-                    placeholder="janedoe"
-                    value={values.username}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.username && !!errors.username}
-                    className="form-control-dark ps-5"
-                  />
-                </div>
-                {touched.username && errors.username && (
-                  <div className="text-danger small fw-semibold mt-1">{errors.username}</div>
-                )}
-              </Form.Group>
+              <div className="row g-3 mb-3">
+                <Form.Group className="col-md-6">
+                  <Form.Label className="form-label mb-1">Username</Form.Label>
+                  <div className="position-relative">
+                    <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
+                      <User size={18} />
+                    </span>
+                    <Form.Control
+                      type="text"
+                      name="username"
+                      placeholder="janedoe"
+                      value={values.username}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.username && !!errors.username}
+                      className="form-control-dark ps-5"
+                    />
+                  </div>
+                  {touched.username && errors.username && (
+                    <div className="text-danger small fw-semibold mt-1">{errors.username}</div>
+                  )}
+                </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label className="form-label">Email Address</Form.Label>
-                <div className="position-relative">
-                  <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
-                    <Mail size={18} />
-                  </span>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    placeholder="jane.doe@company.com"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.email && !!errors.email}
-                    className="form-control-dark ps-5"
-                  />
-                </div>
-                {touched.email && errors.email && (
-                  <div className="text-danger small fw-semibold mt-1">{errors.email}</div>
-                )}
-              </Form.Group>
+                <Form.Group className="col-md-6">
+                  <Form.Label className="form-label mb-1">Email Address</Form.Label>
+                  <div className="position-relative">
+                    <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
+                      <Mail size={18} />
+                    </span>
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      placeholder="jane.doe@company.com"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.email && !!errors.email}
+                      className="form-control-dark ps-5"
+                    />
+                  </div>
+                  {touched.email && errors.email && (
+                    <div className="text-danger small fw-semibold mt-1">{errors.email}</div>
+                  )}
+                </Form.Group>
+              </div>
 
-              <Form.Group className="mb-3">
-                <Form.Label className="form-label">Password</Form.Label>
-                <div className="position-relative">
-                  <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
-                    <Lock size={18} />
-                  </span>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.password && !!errors.password}
-                    className="form-control-dark ps-5"
-                  />
-                </div>
-                {touched.password && errors.password && (
-                  <div className="text-danger small fw-semibold mt-1">{errors.password}</div>
-                )}
-              </Form.Group>
+              <div className="row g-3 mb-4">
+                <Form.Group className="col-md-6">
+                  <Form.Label className="form-label mb-1">Password</Form.Label>
+                  <div className="position-relative">
+                    <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
+                      <Lock size={18} />
+                    </span>
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      placeholder="••••••••"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.password && !!errors.password}
+                      className="form-control-dark ps-5"
+                    />
+                  </div>
+                  {touched.password && errors.password && (
+                    <div className="text-danger small fw-semibold mt-1">{errors.password}</div>
+                  )}
+                </Form.Group>
 
-              <Form.Group className="mb-4">
-                <Form.Label className="form-label">Confirm Password</Form.Label>
-                <div className="position-relative">
-                  <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
-                    <Lock size={18} />
-                  </span>
-                  <Form.Control
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="••••••••"
-                    value={values.confirmPassword}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.confirmPassword && !!errors.confirmPassword}
-                    className="form-control-dark ps-5"
-                  />
-                </div>
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <div className="text-danger small fw-semibold mt-1">{errors.confirmPassword}</div>
-                )}
-              </Form.Group>
+                <Form.Group className="col-md-6">
+                  <Form.Label className="form-label mb-1">Confirm Password</Form.Label>
+                  <div className="position-relative">
+                    <span className="position-absolute top-50 start-0 translate-middle-y ps-3" style={{ color: '#6e7681' }}>
+                      <Lock size={18} />
+                    </span>
+                    <Form.Control
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="••••••••"
+                      value={values.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.confirmPassword && !!errors.confirmPassword}
+                      className="form-control-dark ps-5"
+                    />
+                  </div>
+                  {touched.confirmPassword && errors.confirmPassword && (
+                    <div className="text-danger small fw-semibold mt-1">{errors.confirmPassword}</div>
+                  )}
+                </Form.Group>
+              </div>
 
-              <Button type="submit" disabled={isSubmitting} className="btn-indigo w-100 py-3 d-flex align-items-center justify-content-center gap-2 mb-3 fs-6">
-                <UserPlus size={20} /> {isSubmitting ? 'Registering...' : 'Register'}
+              <Button type="submit" disabled={isSubmitting} className="btn-indigo w-100 py-2.5 d-flex align-items-center justify-content-center gap-2 mb-3 fs-6">
+                <UserPlus size={18} /> {isSubmitting ? 'Registering...' : 'Register'}
               </Button>
 
-              <div className="text-center mt-3">
+              <div className="text-center mt-2">
                 <p className="small mb-0" style={{ color: '#8b949e' }}>
                   Already have an account?{' '}
                   <Link to="/login" className="text-decoration-none fw-bold" style={{ color: '#10b981' }}>
