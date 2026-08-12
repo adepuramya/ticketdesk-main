@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Card, Form, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useDocumentTitle } from '../utils/useDocumentTitle';
 import { Headphones, Mail, Lock, LogIn } from 'lucide-react';
@@ -20,7 +20,9 @@ export const Login = () => {
   useDocumentTitle('Sign In');
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState('');
+  const successMessage = location.state?.message;
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setErrorMessage('');
@@ -57,6 +59,7 @@ export const Login = () => {
           <p className="fs-6 mb-0" style={{ color: '#8b949e' }}>Enterprise IT Incident & Request Portal</p>
         </div>
 
+        {successMessage && <Alert variant="success">{successMessage}</Alert>}
         {errorMessage && <Alert variant="danger" dismissible onClose={() => setErrorMessage('')}>{errorMessage}</Alert>}
 
         <Formik
@@ -117,6 +120,15 @@ export const Login = () => {
               <Button type="submit" disabled={isSubmitting} className="btn-indigo w-100 py-3 d-flex align-items-center justify-content-center gap-2 mb-3 fs-6">
                 <LogIn size={20} /> {isSubmitting ? 'Signing In...' : 'Sign In'}
               </Button>
+
+              <div className="text-center mt-3">
+                <p className="small mb-0" style={{ color: '#8b949e' }}>
+                  Don't have an account?{' '}
+                  <Link to="/register" className="text-decoration-none fw-bold" style={{ color: '#10b981' }}>
+                    Register here
+                  </Link>
+                </p>
+              </div>
             </Form>
           )}
         </Formik>

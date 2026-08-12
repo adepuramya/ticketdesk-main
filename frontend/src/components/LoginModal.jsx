@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Headphones, Mail, Lock, LogIn } from 'lucide-react';
 
@@ -113,6 +113,15 @@ export const LoginModal = ({ show, onHide }) => {
               <Button type="submit" disabled={isSubmitting} className="btn-indigo w-100 py-3 d-flex align-items-center justify-content-center gap-2 mb-3 fs-6">
                 <LogIn size={20} /> {isSubmitting ? 'Signing In...' : 'Sign In'}
               </Button>
+
+              <div className="text-center mt-3">
+                <p className="small mb-0" style={{ color: '#8b949e' }}>
+                  Don't have an account?{' '}
+                  <Link to="/register" onClick={onHide} className="text-decoration-none fw-bold" style={{ color: '#10b981' }}>
+                    Register here
+                  </Link>
+                </p>
+              </div>
             </Form>
           )}
         </Formik>

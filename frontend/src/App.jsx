@@ -8,6 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { TicketList } from './pages/TicketList';
 import { TicketDetail } from './pages/TicketDetail';
@@ -27,6 +28,7 @@ export function App() {
                 {/* Public Landing & Auth Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
 
                 {/* Protected Application Routes */}
                 <Route element={<ProtectedRoute />}>
