@@ -189,6 +189,11 @@ public class TicketServiceImpl implements TicketService {
         }
 
         if (request.getStatus() != null) {
+            if (currentUser.getRole().getName() == ERole.ROLE_EMPLOYEE) {
+                if (request.getStatus() == TicketStatus.RESOLVED || request.getStatus() == TicketStatus.IN_PROGRESS) {
+                    throw new BadRequestException("Employees cannot set ticket status to " + request.getStatus());
+                }
+            }
             updateTicketStatusInternal(ticket, request.getStatus());
         }
 
@@ -203,6 +208,12 @@ public class TicketServiceImpl implements TicketService {
 
         User currentUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        if (currentUser.getRole().getName() == ERole.ROLE_EMPLOYEE) {
+            if (request.getStatus() == TicketStatus.RESOLVED || request.getStatus() == TicketStatus.IN_PROGRESS) {
+                throw new BadRequestException("Employees cannot set ticket status to " + request.getStatus());
+            }
+        }
 
         updateTicketStatusInternal(ticket, request.getStatus());
 

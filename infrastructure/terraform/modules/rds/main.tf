@@ -26,6 +26,7 @@ resource "aws_db_instance" "mysql" {
   skip_final_snapshot    = true
   deletion_protection    = false
   parameter_group_name   = "default.mysql8.0"
+  backup_retention_period = 1
 
   tags = merge(var.tags, {
     Name = "${var.project_name}-${var.environment}-mysql"

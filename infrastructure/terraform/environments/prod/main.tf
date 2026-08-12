@@ -25,6 +25,8 @@ provider "aws" {
       Project     = "TicketDesk"
       Environment = var.environment
       ManagedBy   = "Terraform"
+      Owner       = "ramya"
+      CostCenter  = "CC-101"
     }
   }
 }

@@ -104,7 +104,7 @@ export const TicketDetail = () => {
 
           {/* Action Buttons */}
           <div className="d-flex flex-wrap gap-2">
-            {ticket.status !== 'RESOLVED' && ticket.status !== 'CLOSED' && (
+            {ticket.status !== 'RESOLVED' && ticket.status !== 'CLOSED' && hasRole(['ROLE_ADMIN', 'ROLE_SUPPORT_ENGINEER']) && (
               <Button
                 variant="outline-success"
                 size="sm"
