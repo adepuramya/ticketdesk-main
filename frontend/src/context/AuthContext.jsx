@@ -3,41 +3,34 @@ import { authApi } from '../api/authApi';
 
 const AuthContext = createContext();
 
-const DEFAULT_USER = {
-  id: 1,
-  username: 'admin',
-  email: 'admin@servicedesk.com',
-  firstName: 'System',
-  lastName: 'Administrator',
-  role: 'ROLE_ADMIN',
-  accessToken: 'bypass-auth-token',
-};
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cachedUser = localStorage.getItem('user');
+
     if (cachedUser) {
       try {
         setUser(JSON.parse(cachedUser));
       } catch (e) {
         console.error('Failed to parse user session', e);
+        localStorage.removeItem('user');
         setUser(null);
       }
-    } else {
-      setUser(null);
     }
+
     setLoading(false);
   }, []);
 
   const login = async (credentials) => {
     const res = await authApi.login(credentials);
+
     if (res.success && res.data) {
       setUser(res.data);
       localStorage.setItem('user', JSON.stringify(res.data));
     }
+
     return res;
   };
 
@@ -58,14 +51,25 @@ export const AuthProvider = ({ children }) => {
 
   const hasRole = (roles) => {
     if (!user || !user.role) return false;
+
     if (Array.isArray(roles)) {
       return roles.includes(user.role);
     }
+
     return user.role === roles;
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, hasRole }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        login,
+        register,
+        logout,
+        hasRole
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
