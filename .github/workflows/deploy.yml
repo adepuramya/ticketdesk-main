@@ -160,13 +160,13 @@ jobs:
         run: |
           cd infrastructure/terraform/environments/prod
           terraform apply -auto-approve tfplan
-
   # Stage 6: Deploy ECS Service & Smoke Test
   ecs-deploy-smoke-test:
     name: ECS Fargate Rolling Deployment & Smoke Test
     runs-on: ubuntu-latest
     needs: terraform-deploy
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
     steps:
       - name: Configure AWS Credentials
         id: aws-auth
@@ -189,18 +189,43 @@ jobs:
       - name: Wait for ECS Deployment Stability
         if: steps.aws-auth.outcome == 'success'
         run: |
-          aws ecs wait services-stable \
-            --cluster ticketdesk-prod-cluster \
-            --services ticketdesk-prod-backend-service \
-            --region ${{ env.AWS_REGION }}
+          echo "Waiting for ECS deployment to become stable..."
+
+          MAX_RETRIES=3
+          RETRY=1
+
+          while [ $RETRY -le $MAX_RETRIES ]; do
+            echo "ECS stability check attempt $RETRY of $MAX_RETRIES..."
+
+            if aws ecs wait services-stable \
+              --cluster ticketdesk-prod-cluster \
+              --services ticketdesk-prod-backend-service \
+              --region ${{ env.AWS_REGION }}; then
+
+              echo "ECS service is stable!"
+              exit 0
+            fi
+
+            echo "ECS is not stable yet."
+            RETRY=$((RETRY + 1))
+
+            if [ $RETRY -le $MAX_RETRIES ]; then
+              echo "Waiting 30 seconds before trying again..."
+              sleep 30
+            fi
+          done
+
+          echo "ECS deployment did not become stable after all retries."
+          exit 1
 
       - name: Run Smoke Tests against ALB Endpoint
         if: steps.aws-auth.outcome == 'success'
         run: |
           ALB_DNS=$(aws elbv2 describe-load-balancers --names ticketdesk-prod-alb --query "LoadBalancers[0].DNSName" --output text)
           echo "ALB DNS: $ALB_DNS"
-          
+
           HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://$ALB_DNS/api/actuator/health)
+
           if [ "$HEALTH_STATUS" -eq 200 ]; then
             echo "Smoke test passed! Healthcheck endpoint returned 200 OK."
           else
