@@ -33,3 +33,4 @@ tfplan
 # Local environment files
 .env
 .env.local
+.env.production

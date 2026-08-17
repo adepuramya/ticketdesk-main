@@ -1,13 +1,19 @@
-# ECS Task Execution Role
+# ============================================================
+# ECS TASK EXECUTION ROLE
+# Used by ECS/Fargate to pull images, write logs, and fetch secrets
+# ============================================================
+
 resource "aws_iam_role" "ecs_execution_role" {
   name = "${var.project_name}-${var.environment}-ecs-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
+
     Statement = [
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
+
         Principal = {
           Service = "ecs-tasks.amazonaws.com"
         }
@@ -18,30 +24,36 @@ resource "aws_iam_role" "ecs_execution_role" {
   tags = var.tags
 }
 
+# Standard ECS Task Execution Role policy
 resource "aws_iam_role_policy_attachment" "ecs_execution_standard" {
   role       = aws_iam_role.ecs_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# Policy for Secrets Manager access from Task Execution Role (Least Privilege)
+# Secrets Manager access for ECS Execution Role
 resource "aws_iam_policy" "ecs_execution_secrets" {
   name        = "${var.project_name}-${var.environment}-ecs-secrets-policy"
   description = "Allows ECS Execution Role to pull secrets from Secrets Manager"
 
   policy = jsonencode({
     Version = "2012-10-17"
+
     Statement = [
       {
         Effect = "Allow"
+
         Action = [
           "secretsmanager:GetSecretValue"
         ]
+
         Resource = [
           "arn:aws:secretsmanager:*:*:secret:${var.project_name}/*"
         ]
       }
     ]
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_execution_secrets" {
@@ -49,16 +61,23 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_secrets" {
   policy_arn = aws_iam_policy.ecs_execution_secrets.arn
 }
 
-# ECS Task Role
+
+# ============================================================
+# ECS TASK ROLE
+# Used by the application container at runtime
+# ============================================================
+
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.project_name}-${var.environment}-ecs-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
+
     Statement = [
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
+
         Principal = {
           Service = "ecs-tasks.amazonaws.com"
         }
@@ -69,22 +88,29 @@ resource "aws_iam_role" "ecs_task_role" {
   tags = var.tags
 }
 
-# Policy for S3 access from Task Role (Least Privilege)
+
+# ============================================================
+# S3 ACCESS FOR ECS TASK ROLE
+# ============================================================
+
 resource "aws_iam_policy" "s3_access" {
   name        = "${var.project_name}-${var.environment}-s3-policy"
-  description = "Allows TicketDesk backend to read/write attachments in S3"
+  description = "Allows TicketDesk backend to read and write attachments in S3"
 
   policy = jsonencode({
     Version = "2012-10-17"
+
     Statement = [
       {
         Effect = "Allow"
+
         Action = [
           "s3:GetObject",
           "s3:PutObject",
           "s3:DeleteObject",
           "s3:ListBucket"
         ]
+
         Resource = [
           var.attachment_bucket_arn,
           "${var.attachment_bucket_arn}/*"
@@ -92,9 +118,58 @@ resource "aws_iam_policy" "s3_access" {
       }
     ]
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_s3" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.s3_access.arn
+}
+
+
+# ============================================================
+# SECRETS MANAGER + PARAMETER STORE ACCESS FOR ECS TASK ROLE
+# ============================================================
+
+resource "aws_iam_policy" "ecs_task_runtime_config" {
+  name        = "${var.project_name}-${var.environment}-ecs-runtime-config-policy"
+  description = "Allows ECS Task Role to read database secrets and runtime configuration"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [
+      {
+        Effect = "Allow"
+
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+
+        Resource = [
+          "arn:aws:secretsmanager:*:*:secret:${var.project_name}/*"
+        ]
+      },
+      {
+        Effect = "Allow"
+
+        Action = [
+          "ssm:GetParameter",
+          "ssm:GetParameters"
+        ]
+
+        Resource = [
+          "arn:aws:ssm:*:*:parameter/${var.project_name}/*"
+        ]
+      }
+    ]
+  })
+
+  tags = var.tags
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_runtime_config" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.ecs_task_runtime_config.arn
 }
