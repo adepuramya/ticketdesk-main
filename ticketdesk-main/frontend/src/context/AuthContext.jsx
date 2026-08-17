@@ -3,15 +3,15 @@ import { authApi } from '../api/authApi';
 
 const AuthContext = createContext();
 
-const DEFAULT_USER = {
-  id: 1,
-  username: 'admin',
-  email: 'admin@servicedesk.com',
-  firstName: 'System',
-  lastName: 'Administrator',
-  role: 'ROLE_ADMIN',
-  accessToken: 'bypass-auth-token',
-};
+// const DEFAULT_USER = {
+//   id: 1,
+//   username: 'admin',
+//   email: 'admin@servicedesk.com',
+//   firstName: 'System',
+//   lastName: 'Administrator',
+//   role: 'ROLE_ADMIN',
+//   accessToken: 'bypass-auth-token',
+// };
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
